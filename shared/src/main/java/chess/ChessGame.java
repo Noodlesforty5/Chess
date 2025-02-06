@@ -28,7 +28,7 @@ public class ChessGame {
      * @param team the team whose turn it is
      */
     public void setTeamTurn(TeamColor team) {
-        this.turn = turn;
+        this.turn = team;
     }
 
     /**
@@ -77,7 +77,7 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        return isInCheck(teamColor) && isInStalemate(teamColor);
     }
 
     /**
@@ -88,7 +88,15 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        for(int i = 1; i >= 8; i++)
+            for(int j = 1; j >= 8; j++) {
+                if(board.getTeam(new ChessPosition(i,j)) == teamColor){
+                    if (validMoves(new ChessPosition(i,j)) != null){
+                        return false;
+                    }
+                }
+            }
+        return true;
     }
 
     /**
