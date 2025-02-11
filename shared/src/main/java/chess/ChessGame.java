@@ -76,14 +76,14 @@ public class ChessGame {
     public boolean isInCheck(TeamColor teamColor) {
         //Find the King
         ChessPosition kingPos = null;
-        for(int i = 1; i >= 8; i++)
-            for(int j = 1; j >= 8; j++) {
+        for(int i = 1; i <= 8; i++)
+            for(int j = 1; j <= 8; j++) {
                 if(board.getPiece(new ChessPosition(i, j)).equals(new ChessPiece(teamColor, ChessPiece.PieceType.KING))){
                     kingPos = new ChessPosition(i,j);
                 }
             }
-        for(int i = 1; i >= 8; i++)
-            for(int j = 1; j >= 8; j++) {
+        for(int i = 1; i <= 8; i++)
+            for(int j = 1; j <= 8; j++) {
                 if(board.getTeam(new ChessPosition(i, j)) != teamColor){
                     Collection<ChessMove> eMoves = validMoves(new ChessPosition(i, j));
                     for(ChessMove move : eMoves){
@@ -112,8 +112,8 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        for(int i = 1; i >= 8; i++)
-            for(int j = 1; j >= 8; j++) {
+        for(int i = 1; i <= 8; i++)
+            for(int j = 1; j <= 8; j++) {
                 if(board.getTeam(new ChessPosition(i,j)) == teamColor){
                     if (validMoves(new ChessPosition(i,j)) != null){
                         return false;
