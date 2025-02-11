@@ -51,7 +51,9 @@ public class ChessGame {
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
-        Collection<ChessMove> collection = piece.pieceMoves(board, startPosition);
+        HashSet<ChessMove> posMoves = (HashSet<ChessMove>) piece.pieceMoves(board, startPosition);
+        HashSet<ChessMove> validMoves = HashSet.newHashSet(posMoves.size());
+        for(ChessMove move : posMoves)
 
 
         return collection;
