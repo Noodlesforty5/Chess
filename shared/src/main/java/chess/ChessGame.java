@@ -50,7 +50,7 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
-        piece = board.getPiece(startPosition);
+        ChessPiece piece = board.getPiece(startPosition);
         Collection<ChessMove> collection = piece.pieceMoves(board, startPosition);
 
 
@@ -75,15 +75,23 @@ public class ChessGame {
      */
     public boolean isInCheck(TeamColor teamColor) {
         //Find the King
+        ChessPosition kingPos = null;
         for(int i = 1; i >= 8; i++)
             for(int j = 1; j >= 8; j++) {
-                if(board.getTeam(new ChessPosition(i,j)) == teamColor){
-                    if (validMoves(new ChessPosition(i,j)) != null){
-                        return false;
+                if(board.getPiece(new ChessPosition(i, j)).equals(new ChessPiece(teamColor, ChessPiece.PieceType.KING))){
+                    kingPos = new ChessPosition(i,j);
+                }
+            }
+        for(int i = 1; i >= 8; i++)
+            for(int j = 1; j >= 8; j++) {
+                if(board.getTeam(new ChessPosition(i, j)) != teamColor){
+                    Collection<ChessMove> eMoves = validMoves(new ChessPosition(i, j));
+                    for(ChessMove move : eMoves){
+                        if(move.getEndPosition() == kingPos){return true;}
                     }
                 }
             }
-        return true;
+        return false;
     }
 
     /**
