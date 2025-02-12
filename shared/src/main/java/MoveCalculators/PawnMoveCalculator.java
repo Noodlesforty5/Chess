@@ -3,6 +3,7 @@ package MoveCalculators;
 import chess.*;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 public class PawnMoveCalculator extends MoveCalculators {
@@ -52,7 +53,7 @@ public class PawnMoveCalculator extends MoveCalculators {
                     }
                 }
 
-            return moves;
+            return (moves != null) ? moves : Collections.emptyList();
         }
 
     }
