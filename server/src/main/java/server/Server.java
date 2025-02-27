@@ -22,4 +22,10 @@ public class Server {
         Spark.stop();
         Spark.awaitStop();
     }
+    public void clear(ClearRequest clearRequest){
+        UserService.clearDB();
+        GameService.clearDB();
+        res.status(204);
+    }
 }
+//clear
