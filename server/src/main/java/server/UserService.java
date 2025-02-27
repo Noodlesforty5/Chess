@@ -2,7 +2,7 @@ package server;
 
 public class UserService {
     public RegisterResult register(RegisterRequest registerRequest) {
-        return null;
+        return UserDAO.RegisterResult;
     }
     public LoginResult login(LoginRequest loginRequest) {
         return null;
