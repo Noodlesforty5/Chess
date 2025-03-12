@@ -12,9 +12,9 @@ public interface GameDAO {
 
     void createGame(GameData gameData);
 
-    boolean gameExists(int gameID);
+    boolean gameExists(int gameID) throws DataAccessException;
 
-    GameData getGame(int gameID);
+    GameData getGame(int gameID) throws DataAccessException;
 
     void updateGame(GameData gameData);
 }
