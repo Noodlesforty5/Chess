@@ -21,8 +21,14 @@ public class MemoryGameDAO implements GameDAO{
     }
 
     @Override
-    public void createGame(GameData gameData) {
-        db.add(gameData);
+    public void createGame(GameData gameData) throws DataAccessException {
+
+        for (GameData game : db) {
+                if (game.gameID() == (gameData.gameID())) {
+                    db.add(gameData);
+                }
+            }
+        throw new DataAccessException("GameID already exists, id: " + gameData.gameID());
     }
 
     @Override

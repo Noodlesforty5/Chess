@@ -6,7 +6,7 @@ import models.UserData;
 import java.util.HashSet;
 
 public class MemoryAuthDAO implements AuthDAO {
-    private HashSet<UserData> db;
+    private HashSet<AuthData> db;
 
     public MemoryAuthDAO(){
         db = HashSet.newHashSet(16);
@@ -18,16 +18,28 @@ public class MemoryAuthDAO implements AuthDAO {
 
     @Override
     public void deleteAuth(String authToken) {
+        for(AuthData authData : db){
+            if(authData.authToken().equals(authToken)){;
+                db.remove(authData);
+                break;
+            }
+        }
 
     }
 
     @Override
-    public AuthData getAuth(String authToken) {
-        return null;
+    public AuthData getAuth(String authToken) throws DataAccessException {
+        for(AuthData authData : db){
+            if(authData.authToken().equals(authToken)){;
+                return authData;
+            }
+        }
+        throw new DataAccessException("AuthToken does not exist: " + authToken);
     }
 
     @Override
     public void addAuth(AuthData authData) {
+        db.add(authData);
 
     }
 

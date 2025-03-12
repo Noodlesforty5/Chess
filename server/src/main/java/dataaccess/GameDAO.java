@@ -10,7 +10,7 @@ public interface GameDAO {
 
     HashSet<GameData> listGames();
 
-    void createGame(GameData gameData);
+    void createGame(GameData gameData) throws DataAccessException;
 
     boolean gameExists(int gameID) throws DataAccessException;
 

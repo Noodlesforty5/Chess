@@ -24,7 +24,7 @@ public class GameHandler {
         return new Gson().toJson(games);
     }
 
-    public Object createGame(Request request, Response response) throws UnauthorizedException {
+    public Object createGame(Request request, Response response) throws UnauthorizedException, DataAccessException {
         if (!request.body().contains("\"gameName\":")){
             throw new BadRequestException("No gameName provided");
         }
@@ -38,7 +38,7 @@ public class GameHandler {
 
     }
 
-    public Object joinGame(Request request, Response response) throws UnauthorizedException {
+    public Object joinGame(Request request, Response response) throws UnauthorizedException, DataAccessException {
         if (!request.body().contains("\"gameID\":")){
             throw new BadRequestException("No gameID provided");
         }
