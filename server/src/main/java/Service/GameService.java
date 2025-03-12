@@ -40,9 +40,9 @@ public class GameService {
         catch (DataAccessException e){
             throw new UnauthorizedException();
         }
-        int gameID = 0;
+        int gameID;
         do {
-            ThreadLocalRandom.current().nextInt(1,1000);
+            gameID = ThreadLocalRandom.current().nextInt(1,1000);
         }
         while (gameDAO.gameExists(gameID));
         try{
