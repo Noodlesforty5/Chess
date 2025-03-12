@@ -1,7 +1,7 @@
 package dataaccess;
 
 
-import models.GameData;
+import records.GameData;
 
 import java.util.HashSet;
 

@@ -2,8 +2,8 @@ package Service;
 import chess.ChessBoard;
 import chess.ChessGame;
 import dataaccess.*;
-import models.AuthData;
-import models.GameData;
+import records.AuthData;
+import records.GameData;
 
 import java.util.HashSet;
 import java.util.Objects;

@@ -1,6 +1,6 @@
 package dataaccess;
 
-import models.AuthData;
+import records.AuthData;
 
 public interface AuthDAO {
     void clear();

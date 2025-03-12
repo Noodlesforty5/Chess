@@ -4,8 +4,8 @@ import Service.UserService;
 import com.google.gson.Gson;
 import dataaccess.BadRequestException;
 import dataaccess.UnauthorizedException;
-import models.AuthData;
-import models.UserData;
+import records.AuthData;
+import records.UserData;
 import spark.Request;
 import spark.Response;
 

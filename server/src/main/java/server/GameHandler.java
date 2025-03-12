@@ -2,12 +2,11 @@ package server;
 
 import Service.GameService;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import dataaccess.BadRequestException;
 import dataaccess.DataAccessException;
 import dataaccess.UnauthorizedException;
-import models.GameData;
-import models.GameList;
+import records.GameData;
+import records.GameList;
 import spark.Request;
 import spark.Response;
 

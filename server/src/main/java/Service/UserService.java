@@ -1,8 +1,8 @@
 package Service;
 
 import dataaccess.*;
-import models.AuthData;
-import models.UserData;
+import records.AuthData;
+import records.UserData;
 
 import java.util.UUID;
 
@@ -46,14 +46,14 @@ public class UserService {
     }
 
     public AuthData loginUser(UserData userData) throws UnauthorizedException {
-       boolean userAuthenticated;
+       boolean authenticated;
        try {
-           userAuthenticated = userDAO.authenticateUser(userData.username(),userData.password());
+           authenticated = userDAO.authenticateUser(userData.username(),userData.password());
         }
        catch (DataAccessException e){
            throw new UnauthorizedException();
        }
-       if (userAuthenticated){
+       if (authenticated){
            String authToken = UUID.randomUUID().toString();
            AuthData authData = new AuthData(userData.username(), authToken);
            authDAO.addAuth(authData);

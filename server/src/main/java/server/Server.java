@@ -76,17 +76,17 @@ public class Server {
         GameService.clear();
     }
 
-    private void badRequestExceptionHandler(BadRequestException ex, Request req, Response resp){
-        resp.status(400);
-        resp.body("{ \"message\": \"Error: bad request\" }" );
+    private void badRequestExceptionHandler(BadRequestException ex, Request request, Response response){
+        response.status(400);
+        response.body("{ \"message\": \"Error: bad request\" }" );
     }
-    private void unauthorizedExceptionHandler(UnauthorizedException ex, Request req, Response resp){
-        resp.status(401);
-        resp.body("{ \"message\": \"Error: unauthorized\" }" );
+    private void unauthorizedExceptionHandler(UnauthorizedException ex, Request request, Response response){
+        response.status(401);
+        response.body("{ \"message\": \"Error: unauthorized\" }" );
     }
-    private void genericExceptionHandler(GenericException ex, Request req, Response resp){
-        resp.status(500);
-        resp.body("{ \"message\": \"Error: %s\" }".formatted(ex.getMessage()));
+    private void genericExceptionHandler(GenericException ex, Request request, Response response){
+        response.status(500);
+        response.body("{ \"message\": \"Error: %s\" }".formatted(ex.getMessage()));
     }
 
 }
