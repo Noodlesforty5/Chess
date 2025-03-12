@@ -121,12 +121,9 @@ public class GameService {
         catch (DataAccessException e) {
             throw new UnauthorizedException();
         }
-        try {
-            gameDAO.updateGame(gameData);
-        }
-        catch (DataAccessException e) {
-            throw new BadRequestException(e.getMessage());
-        }
+
+        gameDAO.updateGame(gameData);
+
     }
 }
 //join game, create game, list games
