@@ -89,13 +89,10 @@ public class GameService {
             if(blackUser != null && !blackUser.equals(authData.username()))return false;
             else blackUser = authData.username();
         }
-        else if(playerColor != null){
+        else if(playerColor != "BLACK" || playerColor != "WHITE"){
             throw new BadRequestException("%s is not a valid team color".formatted(playerColor));
         }
             gameDAO.updateGame(new GameData(gameID, whiteUser,blackUser, gameData.gameName(), gameData.game()));
-
-
-
         return true;
     }
     public GameData getGameData(String authToken, int gameID) throws UnauthorizedException {

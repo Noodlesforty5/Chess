@@ -2,6 +2,7 @@ package server;
 
 import Service.GameService;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import dataaccess.BadRequestException;
 import dataaccess.DataAccessException;
 import dataaccess.UnauthorizedException;
@@ -44,7 +45,9 @@ public class GameHandler {
         }
         String authToken = request.headers("authorization");
         record joinGameData(String playerColor, int gameID){}
+
         joinGameData joinGameData = new Gson().fromJson(request.body(), joinGameData.class);
+
         boolean joinSuccess = gameService.joinGame(authToken, joinGameData.playerColor, joinGameData.gameID);
 
         if(joinSuccess){
