@@ -48,10 +48,10 @@ public class GameHandler {
         boolean joinSuccess = gameService.joinGame(authToken, joinGameData.playerColor, joinGameData.gameID);
 
         if(joinSuccess){
-            response.status(403);
-            return "{ \"message\": \"Error already taken\" }";
+            response.status(200);
+            return "{}";
         }
-        response.status(200);
-        return "{}";
+        response.status(403);
+        return "{ \"message\": \"Error already taken\" }";
     }
 }
