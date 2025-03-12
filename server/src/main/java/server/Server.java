@@ -20,7 +20,7 @@ public class Server {
 
 
 
-    public Server(UserService userService, GameService gameService){
+    public Server(){
 
         userDAO = new MemoryUserDAO();
         authDAO = new MemoryAuthDAO();
