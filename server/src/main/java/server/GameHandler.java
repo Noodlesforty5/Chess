@@ -42,7 +42,9 @@ public class GameHandler {
         if (!request.body().contains("\"gameID\":")){
             throw new BadRequestException("No gameID provided");
         }
+
         String authToken = request.headers("authorization");
+
         record joinGameData(String playerColor, int gameID){}
 
         joinGameData joinGameData = new Gson().fromJson(request.body(), joinGameData.class);

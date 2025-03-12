@@ -59,14 +59,12 @@ public class GameService {
     }
 
     public boolean joinGame(String authToken, String playerColor, int gameID) throws UnauthorizedException, DataAccessException {
-
-
         GameData gameData;
         AuthData authData;
-        authData = authDAO.getAuth(authToken);
 
         try {
             authDAO.getAuth(authToken);
+            authData = authDAO.getAuth(authToken);
         }
         catch (DataAccessException e) {
             throw new UnauthorizedException();
@@ -89,7 +87,7 @@ public class GameService {
             if(blackUser != null && !blackUser.equals(authData.username()))return false;
             else blackUser = authData.username();
         }
-        else if(playerColor != "BLACK" || playerColor != "WHITE"){
+        else {
             throw new BadRequestException("%s is not a valid team color".formatted(playerColor));
         }
             gameDAO.updateGame(new GameData(gameID, whiteUser,blackUser, gameData.gameName(), gameData.game()));
@@ -111,7 +109,7 @@ public class GameService {
 
 
     }
-    public void updateGmae(String authToken, GameData gameData) throws UnauthorizedException {
+    public void updateGame(String authToken, GameData gameData) throws UnauthorizedException {
         try {
             authDAO.getAuth(authToken);
         }
