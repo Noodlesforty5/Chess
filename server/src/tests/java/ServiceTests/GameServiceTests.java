@@ -42,9 +42,12 @@ public class GameServiceTests {
     @DisplayName("List Games Positive Test")
     @Order(1)
     public void ListGamesPosTest() throws DataAccessException, UnauthorizedException {
+        int gameID;
+        AuthData authData;
+        authData = new AuthData("Lord", "authToken");
+        authDAO.addAuth(authData);
         HashSet<GameData> expected = new HashSet<>();
         GameData gameData;
-        int gameID;
         gameID = gameService.createGame("authToken", "cheese");
         gameData = gameService.getGameData("authToken", gameID);
         expected.add(gameData);
@@ -60,13 +63,22 @@ public class GameServiceTests {
     @DisplayName("List Games Negative Test")
     @Order(2)
     public void ListGamesNegTest() throws DataAccessException, UnauthorizedException {
+        int gameID;
+        AuthData authData;
+        authData = new AuthData("Lord", "authToken");
+        authDAO.addAuth(authData);
         HashSet<GameData> expected = new HashSet<>();
         GameData gameData;
-        gameData = new GameData(3, null, null, "gameName", new ChessGame());
-        expected.add(gameData);
-        gameService.createGame("authToken", "cheese");
-        HashSet<GameData> list = gameDAO.listGames();
-        assertNotEquals(list, expected);
+        gameID = gameService.createGame("authToken", "cheese");
+        gameData = gameService.getGameData("authToken", gameID);
+        boolean caught = false;
+        try {
+            gameService.listGames("auth");
+        }
+        catch (UnauthorizedException e){
+            caught = true;
+        }
+        assert caught;
     }
     @Test
     @DisplayName("List Games Positive Test")
