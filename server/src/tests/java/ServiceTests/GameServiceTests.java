@@ -46,7 +46,7 @@ public class GameServiceTests {
         GameData gameData;
         int gameID;
         gameID = gameService.createGame("authToken", "cheese");
-        gameData = new GameData(gameID, null, null, "gameName", new ChessGame());
+        gameData = gameService.getGameData("authToken", gameID);
         expected.add(gameData);
         HashSet<GameData> list = gameDAO.listGames();
 
@@ -148,23 +148,46 @@ public class GameServiceTests {
     @Order(7)
     public void UpdatePosTest() throws UnauthorizedException, DataAccessException {
         int gameID;
-        gameID = gameService.createGame("authToken", "cheese");
-
-        GameData expected = new GameData(gameID, "WHITE", "BLACK", "gameName", new ChessGame());
-        GameData gameData;
         AuthData authData;
+        GameData gameData;
         authData = new AuthData("Lord", "authToken");
         authDAO.addAuth(authData);
+        gameID = gameService.createGame("authToken", "gameName");
+
+        GameData expected = new GameData(gameID, "WHITE", "BLACK", "gameName", new ChessGame());
+
 
         gameData = new GameData(gameID, "WHITE", "BLACK", "gameName", new ChessGame());
-
-        assertEquals(gameData, expected);
+        authDAO.addAuth(authData);
+        gameService.updateGame(authData.authToken(), gameData);
+        assertEquals(gameService.getGameData("authToken", gameID), expected);
 
     }
     @Test
     @DisplayName("Update Negative Test")
     @Order(8)
-    public void UpdateNegTest(){
+    public void UpdateNegTest() throws UnauthorizedException, DataAccessException {
+        int gameID;
+        AuthData authData;
+        authData = new AuthData("Lord", "authToken");
+        authDAO.addAuth(authData);
+
+        gameID = gameService.createGame("authToken", "gameName");
+
+        GameData expected = new GameData(gameID, "WHITE", "BLACK", "gameName", new ChessGame());
+        GameData gameData;
+
+        authData = new AuthData("Lord", "authToken");
+        gameData = new GameData(gameID, "WHITE", "BLACK", "gameName", new ChessGame());
+
+        boolean caught = false;
+        try {
+            gameService.updateGame("peep", gameData);
+        }
+        catch (UnauthorizedException e){
+            caught = true;
+        }
+        assert caught;
 
     }
 }

@@ -7,8 +7,7 @@ import org.junit.jupiter.api.*;
 import records.AuthData;
 import records.UserData;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserServiceTests {
@@ -157,29 +156,29 @@ public class UserServiceTests {
     @Order(7)
     public void ClearTest() throws DataAccessException, UnauthorizedException {
         UserData user = new UserData("user", "password", "email.email@email");
-        userService.createUser(user);
-        AuthData auth = userService.loginUser(user);
-
-        assertEquals(auth, authDAO.getAuth(auth.authToken()));
+        AuthData auth = userService.createUser(user);
+        userService.clear();
+        boolean cleared = false;
+        try{
+            userService.getAuth(auth.authToken());
+        } catch (UnauthorizedException e) {
+            cleared = true;
+        }
+        assert cleared;
 
     }
     @Test
-    @DisplayName("Clear Negative Test")
+    @DisplayName("Clear Negative Test (Not Cleared)")
     @Order(8)
     public void ClearNegTest() throws UnauthorizedException, DataAccessException {
         UserData user = new UserData("user", "password", "email.email@email");
-        userService.createUser(user);
-        AuthData auth = userService.loginUser(user);
-        userService.logout(auth.authToken());
-        boolean thrown = false;
+        AuthData auth = userService.createUser(user);
+        boolean caught = false;
         try{
-            authDAO.getAuth(auth.authToken());
-        }
-        catch (DataAccessException e){
-            thrown = true;
-        }
-        assert thrown;
-
+            userService.getAuth(auth.authToken());
+            caught = true;
+        } catch (UnauthorizedException e) {}
+        assert caught;
     }
 
 }
