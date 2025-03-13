@@ -4,8 +4,11 @@ package ServiceTests;
 import Service.UserService;
 import dataaccess.*;
 import org.junit.jupiter.api.*;
+import records.AuthData;
 import records.UserData;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 public class UserServiceTests {
@@ -37,52 +40,111 @@ public class UserServiceTests {
     @Test
     @DisplayName("Register Negative Test")
     @Order(2)
-    public void ListGamesNegTest(){
+    public void RegisterNegTest(){
+        UserData user = new UserData("user", "password", "email");
+        userService.createUser(user);
+        boolean thrown = false;
+        try{
+            userService.createUser(user);
+
+        }
+        catch (BadRequestException e){
+            thrown = true;
+        }
+        assert thrown;
+
 
     }
     @Test
-    @DisplayName("Register Positive Test")
+    @DisplayName("Logout Positive Test")
     @Order(3)
-    public void LogoutPosTest() throws DataAccessException {
+    public void LogoutPosTest() throws DataAccessException, UnauthorizedException {
         UserData user = new UserData("user", "password", "email.email@email");
         userService.createUser(user);
-        assert userDAO.authenticateUser("user", "password");
+        AuthData authData = userService.loginUser(user);
+        boolean success = false;
+        try{
+            userService.logout(authData.authToken());
+            success = true;
+        }
+        catch (UnauthorizedException e){
+        }
+        assert success;
+
+
 
     }
     @Test
-    @DisplayName("Register Negative Test")
+    @DisplayName("Logout Negative Test")
     @Order(4)
-    public void LogoutNegTest(){
+    public void LogoutNegTest() throws UnauthorizedException {
+        UserData user = new UserData("user", "password", "email.email@email");
+        userService.createUser(user);
+        AuthData authData = userService.loginUser(user);
+        userService.logout(authData.authToken());
+
+        boolean thrown = false;
+        try{
+            userService.logout(authData.authToken());
+        }
+        catch (UnauthorizedException e){
+            thrown = true;
+        }
+        assert thrown;
 
     }
     @Test
-    @DisplayName("Register Positive Test")
+    @DisplayName("Login Positive Test")
     @Order(5)
-    public void LoginPosTest() throws DataAccessException {
+    public void LoginPosTest() throws DataAccessException, UnauthorizedException {
         UserData user = new UserData("user", "password", "email.email@email");
         userService.createUser(user);
-        assert userDAO.authenticateUser("user", "password");
+        AuthData auth = userService.loginUser(user);
+        assertEquals(auth, authDAO.getAuth(auth.authToken()));
+
 
     }
     @Test
-    @DisplayName("Register Negative Test")
+    @DisplayName("Login Negative Test")
     @Order(6)
-    public void LoginNegTest(){
-
+    public void LoginNegTest() throws UnauthorizedException, DataAccessException {
+        UserData user = new UserData("user", "password", "email.email@email");
+        boolean thrown = false;
+        try{
+            userService.loginUser(user);
+        }
+        catch (UnauthorizedException e){
+            thrown = true;
+        }
+        assert thrown;
     }
     @Test
-    @DisplayName("Register Positive Test")
+    @DisplayName("GetAuth Positive Test")
     @Order(7)
-    public void GetAuthTest() throws DataAccessException {
+    public void GetAuthTest() throws DataAccessException, UnauthorizedException {
         UserData user = new UserData("user", "password", "email.email@email");
         userService.createUser(user);
-        assert userDAO.authenticateUser("user", "password");
+        AuthData auth = userService.loginUser(user);
+
+        assertEquals(auth, authDAO.getAuth(auth.authToken()));
 
     }
     @Test
-    @DisplayName("Register Negative Test")
+    @DisplayName("GetAuth Negative Test")
     @Order(8)
-    public void GetAuthNegTest(){
+    public void GetAuthNegTest() throws UnauthorizedException, DataAccessException {
+        UserData user = new UserData("user", "password", "email.email@email");
+        userService.createUser(user);
+        AuthData auth = userService.loginUser(user);
+        userService.logout(auth.authToken());
+        boolean thrown = false;
+        try{
+            authDAO.getAuth(auth.authToken());
+        }
+        catch (DataAccessException e){
+            thrown = true;
+        }
+        assert thrown;
 
     }
 }
