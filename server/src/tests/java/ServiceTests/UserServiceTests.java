@@ -152,5 +152,34 @@ public class UserServiceTests {
         assert thrown;
 
     }
+    @Test
+    @DisplayName("Clear Positive Test")
+    @Order(7)
+    public void ClearTest() throws DataAccessException, UnauthorizedException {
+        UserData user = new UserData("user", "password", "email.email@email");
+        userService.createUser(user);
+        AuthData auth = userService.loginUser(user);
+
+        assertEquals(auth, authDAO.getAuth(auth.authToken()));
+
+    }
+    @Test
+    @DisplayName("Clear Negative Test")
+    @Order(8)
+    public void ClearNegTest() throws UnauthorizedException, DataAccessException {
+        UserData user = new UserData("user", "password", "email.email@email");
+        userService.createUser(user);
+        AuthData auth = userService.loginUser(user);
+        userService.logout(auth.authToken());
+        boolean thrown = false;
+        try{
+            authDAO.getAuth(auth.authToken());
+        }
+        catch (DataAccessException e){
+            thrown = true;
+        }
+        assert thrown;
+
+    }
 
 }

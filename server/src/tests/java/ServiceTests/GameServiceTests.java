@@ -2,8 +2,16 @@ package ServiceTests;
 
 import Service.GameService;
 import Service.UserService;
+import chess.ChessGame;
 import dataaccess.*;
 import org.junit.jupiter.api.*;
+import records.AuthData;
+import records.GameData;
+
+import java.util.HashSet;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 public class GameServiceTests {
@@ -33,52 +41,129 @@ public class GameServiceTests {
     @Test
     @DisplayName("List Games Positive Test")
     @Order(1)
-    public void ListGamesPosTest(){
+    public void ListGamesPosTest() throws DataAccessException, UnauthorizedException {
+        HashSet<GameData> expected = new HashSet<>();
+        GameData gameData;
+        int gameID;
+        gameID = gameService.createGame("authToken", "cheese");
+        gameData = new GameData(gameID, null, null, "gameName", new ChessGame());
+        expected.add(gameData);
+        HashSet<GameData> list = gameDAO.listGames();
+
+        assertEquals(list, expected);
+
+
 
 
     }
     @Test
     @DisplayName("List Games Negative Test")
     @Order(2)
-    public void ListGamesNegTest(){
-
+    public void ListGamesNegTest() throws DataAccessException, UnauthorizedException {
+        HashSet<GameData> expected = new HashSet<>();
+        GameData gameData;
+        gameData = new GameData(3, null, null, "gameName", new ChessGame());
+        expected.add(gameData);
+        gameService.createGame("authToken", "cheese");
+        HashSet<GameData> list = gameDAO.listGames();
+        assertNotEquals(list, expected);
     }
     @Test
     @DisplayName("List Games Positive Test")
-    @Order(1)
-    public void JoinPosTest(){
+    @Order(3)
+    public void JoinPosTest() throws DataAccessException, UnauthorizedException {
+        int gameID;
+        AuthData authData;
+        authData = new AuthData("Lord", "authToken");
+        authDAO.addAuth(authData);
+        gameID = gameService.createGame("authToken", "cheese");
+        assert gameService.joinGame("authToken", "WHITE", gameID);
 
 
     }
     @Test
     @DisplayName("List Games Negative Test")
-    @Order(2)
-    public void JoinNegTest(){
+    @Order(4)
+    public void JoinNegTest() throws UnauthorizedException, DataAccessException {
+        int gameID;
+        AuthData authData;
+        authData = new AuthData("Lord", "authToken");
+        authDAO.addAuth(authData);
+        gameID = gameService.createGame("authToken", "cheese");
+        boolean caught = false;
+        try {
+            gameService.joinGame("authToken", "WHITE", 3);
+        }
+        catch (BadRequestException e){
+            caught = true;
+        }
+        try {
+            gameService.joinGame("authTokenBAD", "WHITE", gameID);
+        }
+        catch (UnauthorizedException e){
+            caught = true;
+        }
+        assert caught;
 
     }
     @Test
-    @DisplayName("List Games Positive Test")
-    @Order(1)
-    public void CreatePosTest(){
+    @DisplayName("Create Positive Test")
+    @Order(5)
+    public void CreatePosTest() throws DataAccessException, UnauthorizedException {
+        GameData gameData;
+        AuthData authData;
+        authData = new AuthData("Lord", "authToken");
+        gameData = new GameData(3, null, null, "gameName", new ChessGame());
+        authDAO.addAuth(authData);
+        gameService.createGame("authToken", "cheese");
+        boolean success = false;
+        try{
+            gameDAO.getGame(3);
+            success = true;
+        }
+        catch (DataAccessException e){}
 
 
     }
     @Test
-    @DisplayName("List Games Negative Test")
-    @Order(2)
-    public void CreateNegTest(){
+    @DisplayName("Create Negative Test")
+    @Order(6)
+    public void CreateNegTest() throws DataAccessException, UnauthorizedException {
+        GameData gameData;
+        AuthData authData;
+        authData = new AuthData("Lord", "authToken");
+        gameData = new GameData(3, null, null, "gameName", new ChessGame());
+        authDAO.addAuth(authData);
+        gameService.createGame("authToken", "cheese");
+        boolean success = false;
+        try{
+            gameDAO.getGame(3);
+
+        }
+        catch (DataAccessException e){success = true;}
 
     }
     @Test
-    @DisplayName("List Games Positive Test")
-    @Order(1)
-    public void UpdatePosTest(){
+    @DisplayName("Update Positive Test")
+    @Order(7)
+    public void UpdatePosTest() throws UnauthorizedException, DataAccessException {
+        int gameID;
+        gameID = gameService.createGame("authToken", "cheese");
 
+        GameData expected = new GameData(gameID, "WHITE", "BLACK", "gameName", new ChessGame());
+        GameData gameData;
+        AuthData authData;
+        authData = new AuthData("Lord", "authToken");
+        authDAO.addAuth(authData);
+
+        gameData = new GameData(gameID, "WHITE", "BLACK", "gameName", new ChessGame());
+
+        assertEquals(gameData, expected);
 
     }
     @Test
-    @DisplayName("List Games Negative Test")
-    @Order(2)
+    @DisplayName("Update Negative Test")
+    @Order(8)
     public void UpdateNegTest(){
 
     }

@@ -12,7 +12,8 @@ public class MoveCalculators {
 
 
     public static boolean canMove(ChessPosition position){
-        return (position.getRow() <= 8 && position.getRow() >= 1) && (position.getColumn() <= 8 && position.getColumn() >= 1);
+        return (position.getRow() <= 8 && position.getRow() >= 1)
+                && (position.getColumn() <= 8 && position.getColumn() >= 1);
     }
 
     protected static Collection<ChessMove> generateMoves(ChessBoard board, ChessPosition myPosition, int[][] posMoves) {

@@ -30,15 +30,15 @@ public class PawnMoveCalculator extends MoveCalculators {
                         moves.add(new ChessMove(myPosition, basicMove, promotionPiece));
                 }
                 // Attack Move
-                ChessPosition AttackLeft = new ChessPosition(curRow + movement, curCol - 1);
-                if ((MoveCalculators.canMove(AttackLeft) && board.getTeam(AttackLeft) != myTeam) && board.getPiece(AttackLeft) != null ) {
-                        moves.add(new ChessMove(myPosition, AttackLeft, promotionPiece));
+                ChessPosition attackLeft = new ChessPosition(curRow + movement, curCol - 1);
+                if ((MoveCalculators.canMove(attackLeft) && board.getTeam(attackLeft) != myTeam) && board.getPiece(attackLeft) != null ) {
+                        moves.add(new ChessMove(myPosition, attackLeft, promotionPiece));
                     }
 
-                ChessPosition AttackRight = new ChessPosition(curRow + movement, curCol + 1);
+                ChessPosition attackRight = new ChessPosition(curRow + movement, curCol + 1);
 
-                if (MoveCalculators.canMove(AttackRight)&& (board.getTeam(AttackRight) != myTeam)  && board.getPiece(AttackRight) != null) {
-                    moves.add(new ChessMove(myPosition, AttackRight, promotionPiece));
+                if (MoveCalculators.canMove(attackRight) && (board.getTeam(attackRight) != myTeam)  && board.getPiece(attackRight) != null) {
+                    moves.add(new ChessMove(myPosition, attackRight, promotionPiece));
                 }
 
             }
@@ -46,10 +46,10 @@ public class PawnMoveCalculator extends MoveCalculators {
 
             // Jumpstart
             if (myPosition.getRow() == 7 && myTeam == ChessGame.TeamColor.BLACK|| myPosition.getRow() == 2 && myTeam == ChessGame.TeamColor.WHITE){
-                    ChessPosition Jumpstart = new ChessPosition(curRow + 2*(movement),curCol);
+                    ChessPosition jumpStart = new ChessPosition(curRow + 2*(movement),curCol);
                     ChessPosition Front = new ChessPosition(curRow + movement, curCol);
-                    if (board.getPiece(Front) == null && board.getPiece(Jumpstart) == null && MoveCalculators.canMove(Front) && MoveCalculators.canMove(Jumpstart)){
-                        moves.add(new ChessMove(myPosition, Jumpstart,null));
+                    if (board.getPiece(Front) == null && board.getPiece(jumpStart) == null && MoveCalculators.canMove(Front) && MoveCalculators.canMove(jumpStart)){
+                        moves.add(new ChessMove(myPosition, jumpStart,null));
                     }
                 }
 
