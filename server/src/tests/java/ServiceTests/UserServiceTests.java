@@ -21,6 +21,11 @@ public class UserServiceTests {
         authDAO.clear();
         userDAO.clear();
     }
+    @BeforeEach
+    public void indiclear(){
+        authDAO.clear();
+        userDAO.clear();
+    }
     @BeforeAll
     public static void init(){
         userDAO = new MemoryUserDAO();

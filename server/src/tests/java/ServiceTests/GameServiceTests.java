@@ -1,15 +1,33 @@
 package ServiceTests;
 
 import Service.GameService;
-import dataaccess.GameDAO;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import Service.UserService;
+import dataaccess.*;
+import org.junit.jupiter.api.*;
 
 
 public class GameServiceTests {
     private static GameDAO gameDAO;
+    private static AuthDAO authDAO;
     private static GameService gameService;
+
+    @AfterAll
+    public static void clear(){
+        authDAO.clear();
+        gameDAO.clear();
+    }
+    @BeforeEach
+    public void indiclear(){
+        authDAO.clear();
+        gameDAO.clear();
+    }
+    @BeforeAll
+    public static void init(){
+        gameDAO = new MemoryGameDAO();
+        authDAO = new MemoryAuthDAO();
+        gameService = new GameService(gameDAO, authDAO);
+
+    }
 
 
     @Test
