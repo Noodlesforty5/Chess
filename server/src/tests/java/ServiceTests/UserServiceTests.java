@@ -147,4 +147,5 @@ public class UserServiceTests {
         assert thrown;
 
     }
+
 }

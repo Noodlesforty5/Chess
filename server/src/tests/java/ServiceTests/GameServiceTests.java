@@ -25,4 +25,43 @@ public class GameServiceTests {
     public void ListGamesNegTest(){
 
     }
+    @Test
+    @DisplayName("List Games Positive Test")
+    @Order(1)
+    public void JoinPosTest(){
+
+
+    }
+    @Test
+    @DisplayName("List Games Negative Test")
+    @Order(2)
+    public void JoinNegTest(){
+
+    }
+    @Test
+    @DisplayName("List Games Positive Test")
+    @Order(1)
+    public void CreatePosTest(){
+
+
+    }
+    @Test
+    @DisplayName("List Games Negative Test")
+    @Order(2)
+    public void CreateNegTest(){
+
+    }
+    @Test
+    @DisplayName("List Games Positive Test")
+    @Order(1)
+    public void UpdatePosTest(){
+
+
+    }
+    @Test
+    @DisplayName("List Games Negative Test")
+    @Order(2)
+    public void UpdateNegTest(){
+
+    }
 }
