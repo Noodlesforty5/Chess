@@ -1,4 +1,4 @@
-package ServiceTests;
+package service;
 
 
 import Service.UserService;

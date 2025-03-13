@@ -1,7 +1,6 @@
-package ServiceTests;
+package service;
 
 import Service.GameService;
-import Service.UserService;
 import chess.ChessGame;
 import dataaccess.*;
 import org.junit.jupiter.api.*;
