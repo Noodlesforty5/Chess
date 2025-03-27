@@ -21,10 +21,10 @@ public class SQLAuthDao implements AuthDAO {
     private final String[] createStatements = {
             """
             CREATE TABLE IF NOT EXISTS  auth (
-              `authToken` int NOT,
+              `authToken` int NOT NULL,
               `userName` varchar(256) NOT NULL,
               `json` TEXT DEFAULT NULL,
-              PRIMARY KEY (`id`),
+              PRIMARY KEY (`authToken`),
               INDEX(userName)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
             """

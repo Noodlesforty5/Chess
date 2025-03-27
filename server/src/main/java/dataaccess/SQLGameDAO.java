@@ -37,7 +37,7 @@ public class SQLGameDAO implements GameDAO{
               `gameName`, VARCHAR(256) NOT NULL,
               `game` TEXT NOT NULL,
               `json` TEXT DEFAULT NULL,
-              PRIMARY KEY (`id`),
+              PRIMARY KEY (`gameID`),
               INDEX(whiteName),
               INDEX(blackName),
               INDEX(gameName),
