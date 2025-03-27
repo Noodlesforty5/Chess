@@ -100,7 +100,7 @@ public class SQLAuthDao implements AuthDAO {
 
     @Override
     public void addAuth(AuthData authData) {
-        var statement = "INSERT INTO game (authToken, username) VALUES (?, ?)";
+        var statement = "INSERT INTO auth (authToken, username) VALUES (?, ?)";
         var json = new Gson().toJson(authData);
         executeUpdate(statement, authData.authToken(), authData.username(), json);
 
