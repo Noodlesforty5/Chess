@@ -109,7 +109,7 @@ public class GameService {
 
 
     }
-    public void updateGame(String authToken, GameData gameData) throws UnauthorizedException {
+    public void updateGame(String authToken, GameData gameData) throws UnauthorizedException, DataAccessException {
         try {
             authDAO.getAuth(authToken);
         }
