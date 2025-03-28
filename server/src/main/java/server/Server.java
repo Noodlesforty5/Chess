@@ -4,6 +4,7 @@ import dataaccess.*;
 import spark.*;
 import Service.*;
 
+import java.lang.reflect.Member;
 
 
 public class Server {
@@ -22,17 +23,13 @@ public class Server {
 
     public Server(){
 
-        try {
-            userDAO = new SQLUserDAO();
-        } catch (DataAccessException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            authDAO = new SQLAuthDao();
-        } catch (DataAccessException e) {
-            throw new RuntimeException(e);
-        }
-        gameDAO = new SQLGameDAO();
+            userDAO = new MemoryUserDAO();
+
+
+            authDAO = new MemoryAuthDAO();
+
+
+        gameDAO = new MemoryGameDAO();
 
         userService = new UserService(userDAO, authDAO);
         gameService = new GameService(gameDAO, authDAO);
