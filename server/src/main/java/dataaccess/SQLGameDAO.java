@@ -31,10 +31,10 @@ public class SQLGameDAO implements GameDAO{
     private final String[] createStatements = {
             """
             CREATE TABLE IF NOT EXISTS  game (
-              `gameID` INT NOT NULL,
+              `gameID` INT NOT NULL AUTO_INCREMENT,
               `whiteName` VARCHAR(256) NOT NULL,
               `blackName` VARCHAR(256) NOT NULL,
-              `gameName`, VARCHAR(256) NOT NULL,
+              `gameName` VARCHAR(256) NOT NULL,
               `game` TEXT NOT NULL,
               `json` TEXT DEFAULT NULL,
               PRIMARY KEY (`gameID`),
@@ -144,8 +144,9 @@ public class SQLGameDAO implements GameDAO{
     @Override
     public void updateGame(GameData gameData) throws DataAccessException {
         int gameID  = gameData.gameID();
-        var statement = "DELETE FROM game WHERE gameID = ?";
-        executeUpdate(statement, gameID);
-        createGame(gameData);
+        var statement = "UPDATE game SET whiteName = ?, blackName = ?, gameName = ?, game = ?, json = ?, WHERE gameID = ?";
+        var json = new Gson().toJson(gameData);
+        executeUpdate(statement, gameData.whiteUsername(),gameData.blackUsername(),gameData.gameName(), gameData.game(), json, gameID);
+
     }
 }
